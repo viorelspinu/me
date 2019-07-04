@@ -1,0 +1,781 @@
+<style>
+    *,
+    *:after,
+    *:before {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    body,
+    html {
+        font-size: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    /* Clearfix hack by Nicolas Gallagher: http://nicolasgallagher.com/micro-clearfix-hack/ */
+    .clearfix:before,
+    .clearfix:after {
+        content: " ";
+        display: table;
+    }
+
+    .clearfix:after {
+        clear: both;
+    }
+
+    body {
+        font-family: 'Lato', Calibri, Arial, sans-serif;
+        color: #47a3da;
+    }
+
+    a {
+        color: #33F;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: #000;
+    }
+
+    .main,
+    .container>header {
+        width: 100%;
+        max-width: 69em;
+        margin: 0 auto;
+        padding: 0 1.875em 3.125em 1.875em;
+        background: #FFF;
+        text-align: justify;
+    }
+
+    .container>header {
+        padding: 2.875em 1.875em 1.875em;
+    }
+
+    .container>header h1 {
+        font-size: 2.125em;
+        line-height: 1.3;
+        margin: 0 0 0.6em 0;
+        float: left;
+        font-weight: 400;
+    }
+
+    .container>header>span {
+        display: block;
+        position: relative;
+        z-index: 9999;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5em;
+        padding: 0 0 0.6em 0.1em;
+    }
+
+    .container>header>span span:after {
+        width: 30px;
+        height: 30px;
+        left: -12px;
+        font-size: 50%;
+        top: -8px;
+        font-size: 75%;
+        position: relative;
+    }
+
+    .container>header>span span:hover:before {
+        content: attr(data-content);
+        text-transform: none;
+        text-indent: 0;
+        letter-spacing: 0;
+        font-weight: 300;
+        font-size: 110%;
+        padding: 0.8em 1em;
+        line-height: 1.2;
+        text-align: left;
+        left: auto;
+        margin-left: 4px;
+        position: absolute;
+        color: #555;
+        background: #FFF;
+    }
+
+    .container>header nav {
+        float: right;
+        text-align: center;
+    }
+
+    .container>header nav a {
+        display: inline-block;
+        position: relative;
+        text-align: left;
+        width: 2.5em;
+        height: 2.5em;
+        background: #fff;
+        border-radius: 50%;
+        margin: 0 0.1em;
+        border: 4px solid #47a3da;
+    }
+
+    .container>header nav a>span {
+        display: none;
+    }
+
+    .container>header nav a:hover:before {
+        content: attr(data-info);
+        color: #47a3da;
+        position: absolute;
+        width: 600%;
+        top: 120%;
+        text-align: right;
+        right: 0;
+        pointer-events: none;
+    }
+
+    .container>header nav a:hover {
+        background: #EEE;
+    }
+
+    .bp-icon:after {
+        font-family: 'bpicons';
+        speak: none;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        text-align: center;
+        color: #47a3da;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    .container>header nav .bp-icon:after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        line-height: 2;
+        text-indent: 0;
+    }
+
+    .container>header nav a:hover:after {
+        color: #555;
+    }
+
+    .bp-icon-next:after {
+        content: "\e000";
+    }
+
+    .bp-icon-drop:after {
+        content: "\e001";
+    }
+
+    .bp-icon-archive:after {
+        content: "\e002";
+    }
+
+    .bp-icon-about:after {
+        content: "\e003";
+    }
+
+    .bp-icon-prev:after {
+        content: "\e004";
+    }
+
+    @media screen and (max-width: 55em) {
+
+        .container>header h1,
+        .container>header nav {
+            float: none;
+        }
+
+        .container>header>span,
+        .container>header h1 {
+            text-align: center;
+        }
+
+        .container>header nav {
+            margin: 0 auto;
+        }
+
+        .container>header>span {
+            text-indent: 30px;
+        }
+    }
+
+    @font-face {
+        font-family: 'ecoico';
+        src: url('../fonts/timelineicons/ecoico.eot');
+        src: url('../fonts/timelineicons/ecoico.eot?#iefix') format('embedded-opentype'),
+            url('../fonts/timelineicons/ecoico.woff') format('woff'),
+            url('../fonts/timelineicons/ecoico.ttf') format('truetype'),
+            url('../fonts/timelineicons/ecoico.svg#ecoico') format('svg');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    /* Made with https://icomoon.io/ */
+
+    .cbp_tmtimeline {
+        margin: 0px 0 0 0;
+        padding: 0;
+        list-style: none;
+        position: relative;
+    }
+
+    /* The line */
+    .cbp_tmtimeline:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 10px;
+        background: #EEE;
+        left: 20%;
+        margin-left: -10px;
+    }
+
+    /* The date/time */
+    .cbp_tmtimeline>li {
+        position: relative;
+    }
+
+    .cbp_tmtimeline>li .cbp_tmtime {
+        display: block;
+        width: 25%;
+        padding-right: 100px;
+        position: absolute;
+    }
+
+    .cbp_tmtimeline>li .cbp_tmtime span {
+        display: block;
+        text-align: right;
+    }
+
+    .cbp_tmtimeline>li .cbp_tmtime span:first-child {
+        font-size: 0.9em;
+        color: #bdd0db;
+    }
+
+    .cbp_tmtimeline>li .cbp_tmtime span:last-child {
+        font-size: 1.9em;
+        color: #555;
+    }
+
+    .cbp_tmtimeline>li:nth-child(odd) .cbp_tmtime span:last-child {
+        color: #555;
+    }
+
+    /* Right content */
+    .cbp_tmtimeline>li .cbp_tmlabel {
+        margin: 0 0 15px 25%;
+        background: #FFF;
+        color: #555;
+        padding: 2em;
+        font-size: 16px;
+        font-weight: 300;
+        line-height: 1.4;
+        position: relative;
+        border-radius: 5px;
+    }
+
+    .cbp_tmtimeline>li:nth-child(odd) .cbp_tmlabel {
+        background: #FFF;
+    }
+
+    .cbp_tmtimeline>li .cbp_tmlabel h2 {
+        margin-top: 0px;
+        padding: 0 0 10px 0;
+        border-bottom: 1px solid rgba(120, 120, 120, 0.4);
+        text-align: left;
+    }
+
+    /* The triangle */
+    .cbp_tmtimeline>li .cbp_tmlabel:after {
+        right: 100%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        border-right-color: #FFF;
+        border-width: 10px;
+        top: 10px;
+    }
+
+    .cbp_tmtimeline>li:nth-child(odd) .cbp_tmlabel:after {
+        border-right-color: #FFF;
+    }
+
+    /* The icons */
+    .cbp_tmtimeline>li .cbp_tmicon {
+        width: 40px;
+        height: 40px;
+        font-family: 'ecoico';
+        speak: none;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        font-size: 1.4em;
+        line-height: 40px;
+        -webkit-font-smoothing: antialiased;
+        position: absolute;
+        color: #fff;
+        background: #46a4da;
+        border-radius: 50%;
+        box-shadow: 0 0 0 8px #afdcf8;
+        text-align: center;
+        left: 20%;
+        top: 0;
+        margin: 0 0 0 -25px;
+    }
+
+    .cbp_tmicon-phone:before {
+        content: "\e000";
+    }
+
+    .cbp_tmicon-screen:before {
+        content: "\e001";
+    }
+
+    .cbp_tmicon-mail:before {
+        content: "\e002";
+    }
+
+    .cbp_tmicon-earth:before {
+        content: "\e003";
+    }
+
+    /* Example Media Queries */
+    @media screen and (max-width: 65.375em) {
+
+        .cbp_tmtimeline>li .cbp_tmtime span:last-child {
+            font-size: 1.1em;
+        }
+    }
+
+    @media screen and (max-width: 47.2em) {
+        .cbp_tmtimeline:before {
+            display: none;
+        }
+
+        .cbp_tmtimeline>li .cbp_tmtime {
+            width: 100%;
+            position: relative;
+            padding: 0 0 20px 0;
+        }
+
+        .cbp_tmtimeline>li .cbp_tmtime span {
+            text-align: left;
+        }
+
+        .cbp_tmtimeline>li .cbp_tmlabel {
+            margin: 0 0 30px 0;
+            padding: 1em;
+            font-weight: 400;
+            font-size: 95%;
+        }
+
+        .cbp_tmtimeline>li .cbp_tmlabel:after {
+            right: auto;
+            left: 20px;
+            border-right-color: transparent;
+            border-bottom-color: #3594cb;
+            top: -20px;
+        }
+
+        .cbp_tmtimeline>li:nth-child(odd) .cbp_tmlabel:after {
+            border-right-color: transparent;
+            border-bottom-color: #6cbfee;
+        }
+
+        .cbp_tmtimeline>li .cbp_tmicon {
+            position: relative;
+            float: right;
+            left: auto;
+            margin: -55px 5px 0 0px;
+        }
+    }
+</style>
+
+
+
+<html lang="en" class="no-js">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About me</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="main">
+            <ul class="cbp_tmtimeline">
+                <li>
+                    <time class="cbp_tmtime" datetime=""><span>June 2019</span></time>
+                    <div class="cbp_tmicon cbp_tmicon-phone"></div>
+                    <div class="cbp_tmlabel">
+                        <h2>Speaker at Cegeka Innovation Breakfast</h2>
+                        <p>
+                            <p>
+                                <p>
+                                    <img style="width: 500px" src="https://www.cegeka.com/hubfs/DSC_0223.jpg"></img>
+                                </p>
+                                I had the pleasure to speak on innovation (more specific, on <a target="_blank"
+                                    href="https://docs.google.com/presentation/d/1BQpctQduIc1JbwZKTtFsKiZBuxBb-xMHM5qrhJGxZFU/edit?usp=sharing">"How to lose money on innovation and why you must keep doing this"</a>) at
+                                <a target="_blank" href="https://www.cegeka.com/innovation-ro">Cegeka Innovation Breakfast Event</a>.
+                            </p>
+                            <p style='margin-top:40px'>
+                                <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:share:6542469552784179200" height="200" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
+                            </p>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <time class="cbp_tmtime" datetime=""><span>October 2018</span> </time>
+                    <div class="cbp_tmicon cbp_tmicon-screen"></div>
+                    <div class="cbp_tmlabel">
+                        <h2>Julie the Brainy Hand @ Softbinator</h2>
+                        <p><iframe width="560" height="315" src="https://www.youtube.com/embed/x3l3WLMUI1g" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe></p>
+
+                        <p>
+                            It's been really nice to talk about our experience building Julie the Brainy Hand at <a href="https://www.facebook.com/groups/talks.by.softbinator/">Talks by Softbinator</a>.
+                        </p>
+                        <p>
+                            My slides are here - <a href="https://docs.google.com/presentation/d/14KWnH_ul12Cm3ZFALwnNCAbq8LqSnUdYHjkOxFx3TKY/edit?usp=sharing"> a story with slot-cars,
+                                computer vision, machine
+                                learning and robotic arms
+                            </a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <time class="cbp_tmtime" datetime=""><span>August 2018</span> </time>
+                    <div class="cbp_tmicon cbp_tmicon-mail"></div>
+                    <div class="cbp_tmlabel">
+                        <h2>Julie the Brainy Hand</h2>
+                        <p>Really cool project developed with the Cegeka team, bringing toghether computer vision, machine learning and robotics. We've been at <a href="https://www.supernovafest.eu/">Supernova 2018
+                                Antwerp</a> for four days, and Julie lost 75 races (out of 1250 !) </p>
+                        <p><iframe width="560" height="315" src="https://www.youtube.com/embed/x1ljdv62GtY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe></p>
+                    </div>
+                </li>
+                <li>
+                    <time class="cbp_tmtime" datetime=""><span>July 2018</span></time>
+                    <div class="cbp_tmicon cbp_tmicon-phone"></div>
+                    <div class="cbp_tmlabel">
+                        <h2>Robotic Sumo Challenge in Cegeka</h2>
+                        <p>Lot of fun organizing the robotic sumo chanllenge in Cegeka !</p>
+                        <p>
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/HLUmYQJ7y5k" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <time class="cbp_tmtime" datetime=""><span>June 2018</span></time>
+                    <div class="cbp_tmicon cbp_tmicon-earth"></div>
+                    <div class="cbp_tmlabel">
+                        <h2>Joined Cegeka Emerging Techologies Team</h2>
+                        <p><img style="width:450px" src="https://2.bp.blogspot.com/-Pnv00EAeO8c/XR3zto2AOQI/AAAAAAAAJDQ/jDK1hw29jRsbq3_c9t8A7IbfWmEWZTfDACLcBGAs/s1600/cegeka.png"></img></p>
+                    </div>
+                </li>
+                <li>
+                    <time class="cbp_tmtime" datetime=""><span>February 2018</span></time>
+                    <div class="cbp_tmicon cbp_tmicon-screen"></div>
+                    <div class="cbp_tmlabel">
+                        <h2>Exit from Robofun</h2>
+                        <p><img style="width:450px" src="https://4.bp.blogspot.com/-n8Uq2T2C8ZY/XR30NR73Z-I/AAAAAAAAJDY/xBlMzkcTS1YmI06KVHsIBlklrbgBtdVEACLcBGAs/s1600/something-new.png"></img></p>
+                    </div>
+                </li>
+                <li>
+                    <time class="cbp_tmtime" datetime=""><span>October 2017</span></time>
+                    <div class="cbp_tmicon cbp_tmicon-screen"></div>
+                    <div class="cbp_tmlabel">
+                        <h2>iot.robofun.ro</h2>
+                        <p>
+                            IOT platform, developed under the Robofun umbrella. Still active - <a target="_blank" href="http://data.robofun.ro">iot.robofun.ro</a>
+                        </p>
+                        <p><img style="width:450px" src="https://4.bp.blogspot.com/-vP4EM-cP0Vo/XR30tYbl_YI/AAAAAAAAJDg/PXkP2_5CN8QYq3mf0YK2GwqsvRtiFyQ8ACLcBGAs/s1600/iot.png"></img></p>
+                    </div>
+                </li>
+                <li>
+                    <time class="cbp_tmtime" datetime=""><span>June 2017</span></time>
+                    <div class="cbp_tmicon cbp_tmicon-screen"></div>
+                    <div class="cbp_tmlabel">
+                        <h2>"Trotti"</h2>
+                        <p>
+                            Self-driving factory autonomous mini-car, computer vision & A.I.
+                        </p>
+                        <p>
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/jGI4q8XR5IY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <time class="cbp_tmtime" datetime=""><span>2013</span></time>
+                    <div class="cbp_tmicon cbp_tmicon-screen"></div>
+                    <div class="cbp_tmlabel">
+                        <h2>"The Beer Keyboard"</h2>
+                        <p>
+                            Our Robofun Create project has been featured on <a href="https://www.huffpost.com/entry/beer-can-keyboard_n_2018764">Huffington Post</a>, <a
+                                href="https://thenextweb.com/2009/09/26/java-baloon-project-highest-twitter-client-room/">TheNextWeb</a>, <a
+                                href="https://gizmodo.com/imagine-the-drunken-emails-youll-send-with-a-beer-can-k-5952457">Gizmodo</a>,<a
+                                href="https://www.engadget.com/2012/10/16/beer-keyboard-combines-arduino-and-raspberry-pi-and-beer/">Engadget</a>, <a
+                                href="https://www.theverge.com/2012/10/21/3530108/beer-can-keyboard-usb-raspberry-pi-arduino">The Verge</a>, <a
+                                href="https://www.tomshardware.com/news/Beer-Keyboard-Robofun-Robofun-create-Arduino-Raspberry-Pi,18480.html">Tom's Hardware</a> and others.
+                        </p>
+                        <p>
+                            <iframe src="https://player.vimeo.com/video/51526148" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+
+                        </p>
+                        <p>
+                            <div id="container" style="text-align:center">
+
+                                <a href="http://www.huffingtonpost.com/2012/11/13/beer-can-keyboard_n_2018764.html" target="_blank"><img
+                                        src="https://1.bp.blogspot.com/--I5hBtD7Ack/XR33WdJmyUI/AAAAAAAAJD8/VtdX9eiFu0wMsubDKdohmGhP5WzmpooBQCLcBGAs/s1600/huff.png"></a>
+
+                                <a href="http://engadget.com/2012/10/16/beer-keyboard-combines-arduino-and-raspberry-pi-and-beer" target="_blank"><img
+                                        src="https://3.bp.blogspot.com/-NBSG3dSI95w/XR33VXLzm0I/AAAAAAAAJDs/6t0sppG79J0aPtaaXMjYJ-3IvD-K4dx4QCLcBGAs/s1600/engadget.png"></a>
+
+                                <a href="http://gizmodo.com/5952457/imagine-the-drunken-emails-youll-send-with-a-beer-can-keyboard" target="_blank"><img
+                                        src="https://4.bp.blogspot.com/-vSRH6yQQFWE/XR33VRID6vI/AAAAAAAAJDw/KCQluErdu1AYv9hDPEWPTLO_yQ8o6REmwCLcBGAs/s1600/gizmodo.png"></a>
+
+                                <a href="http://www.theverge.com/2012/10/21/3530108/beer-can-keyboard-usb-raspberry-pi-arduino" target="_blank"><img
+                                        src="https://4.bp.blogspot.com/-27M4P7g3zBU/XR33W3mtz0I/AAAAAAAAJEI/VDADCLbs4k0xmKD6rrRWEc6uKfneOll6gCLcBGAs/s1600/theverge.png"></a>
+
+                                <a href="http://techcrunch.com/2009/09/22/twitter-iphone-balloon-nears-nerdgasm-event-horizon/" target="_blank"><img
+                                        src="https://4.bp.blogspot.com/-CkJQRNwFek8/XR33Wi51xpI/AAAAAAAAJEE/ERjqhSHQ8R4LfTGmsEOCcSCTm8SnEM_QwCLcBGAs/s1600/techcrunch.png"></a>
+
+                                <a href="http://mashable.com/2012/10/23/keyboard-beer-cans/" target="_blank"><img
+                                        src="https://1.bp.blogspot.com/-MdNPMPfKLWg/XR33WW_av_I/AAAAAAAAJEA/kHiZQMRi6AwvZDaUDudbRlDqK_li2PRbwCLcBGAs/s1600/mashable.png"></a>
+
+                                <a href="http://thenextweb.com/2009/09/26/java-baloon-project-highest-twitter-client-room/" target="_blank"><img
+                                        src="https://3.bp.blogspot.com/-3biS61LTiHw/XR33XJwLEkI/AAAAAAAAJEM/WuSPQyAPKTklJOZ7QsPhVqQhTqfAXESEwCLcBGAs/s1600/tnw.png"></a>
+
+                                <a href="http://news.cnet.com/8301-17938_105-57537216-1/beer-can-keyboard-is-perfect-for-drunken-facebook-updates/" target="_blank"><img
+                                        src="https://2.bp.blogspot.com/-oh_9Ruq9bWY/XR33VpdpFpI/AAAAAAAAJD0/sWOsk-8qcNQfYuMyTyAHxrkSIfeOlRr8QCLcBGAs/s1600/cnet.png"></a>
+
+                                <a href="http://www.tomshardware.com/news/Beer-Keyboard-Robofun-Robofun-create-Arduino-Raspberry-Pi,18480.html" target="_blank"><img
+                                        src="https://1.bp.blogspot.com/-cW2acOgNGKM/XR33XZiXXhI/AAAAAAAAJEQ/7998lCxj5gks8fHoucdl3lyWOwZ46R3JQCLcBGAs/s1600/tom.png"></a>
+
+                                ><a href="http://hackaday.com/2012/10/19/hacking-beer-cans-for-fun-and-publicity/" target="_blank"><img
+                                        src="https://3.bp.blogspot.com/-IzEBKUI2Ruk/XR33WGo1O7I/AAAAAAAAJD4/qd0YtUOAhEsbd9VFwfrVjBa6bEjH92DWACLcBGAs/s320/hack.png"></a>
+
+                            </div>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <time class="cbp_tmtime" datetime=""><span>2013</span></time>
+                    <div class="cbp_tmicon cbp_tmicon-screen"></div>
+                    <div class="cbp_tmlabel">
+                        <h2>"Arduino for the very beginner"</h2>
+                        <p>
+                            Wrote my first book on Arduino.
+                        </p>
+                        <p>
+                            <a href="https://www.robofun.ro/carti/carte-arduino-incepatori">available here on paper</a>
+                        </p>
+                        <p>
+                            or you can read some chapters for free on <a target="_blank" href="https://www.robofun.ro/forum/viewforum.php?f=16&sid=6cb0cc332f59e84669f246fb1773419e">Robofun Forum</a>
+                        </p>
+                        <p>
+                            <img src="https://3.bp.blogspot.com/-Hn3di1HAwN4/XR34n41b2mI/AAAAAAAAJEo/7_fvsyOTyQ8XegkGAXT5_PUdSor5Sy68QCLcBGAs/s1600/book.png"></img>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <time class="cbp_tmtime" datetime=""><span>2012</span></time>
+                    <div class="cbp_tmicon cbp_tmicon-screen"></div>
+                    <div class="cbp_tmlabel">
+                        <h2>"How to build robots in 5 hours"</h2>
+                        <p>
+                            <a href="https://stirileprotv.ro/techschool/viorel-spinu-cum-inveti-sa-construiesti-roboti-in-5-ore.html">"Viorel Spinu. How to learn to build a robot in 5 hours." on StirileProTV</a>.
+                        </p>
+
+                        <p>
+                            <a href="https://stirileprotv.ro/techschool/viorel-spinu-cum-inveti-sa-construiesti-roboti-in-5-ore.html">"
+                                <img style="width: 450px" src="https://2.bp.blogspot.com/-er6fiADvlfw/XR3_zMuZVbI/AAAAAAAAJFs/snPTxuDT3dQc2mNS084mODd_YRzSYQGNQCLcBGAs/s1600/robot.jpg">
+                            </a>
+                        </p>
+
+                    </div>
+                </li>
+                <li>
+
+                <li>
+                    <time class="cbp_tmtime" datetime=""><span>2012</span></time>
+                    <div class="cbp_tmicon cbp_tmicon-screen"></div>
+                    <div class="cbp_tmlabel">
+                        <h2>Live on ProTV with the robotic bar</h2>
+                        <p>
+                            Been <a href="https://stirileprotv.ro/stiri/ilikeit/ilikeit-4.html">live on ProTV with my robotic bar project</a>.
+                        </p>
+                        <p>
+                            <video controls src="https://vid2.stirileprotv.ro/2012/11/19/61220360-2.mp4" class="fp-engine" preload="metadata" x-webkit-airplay="allow"></video>
+                        </p>
+
+                    </div>
+                </li>
+                <li>
+
+                <li>
+                    <time class="cbp_tmtime" datetime=""><span>2011</span></time>
+                    <div class="cbp_tmicon cbp_tmicon-screen"></div>
+                    <div class="cbp_tmlabel">
+                        <h2>Launched Robofun Create</h2>
+                        <p>
+                            Founded under the Robofun umbrella, Robofun Create is about technology. "That kind of technology you cannot find in shops, as it's not there yet"
+                        </p>
+                        <p>
+                            <a href="http://www.robofun.ro/create/portfolio/what-2/">Robofun Create projects</a>
+                        </p>
+
+                        <p>
+                            <img style="width:450px" src="https://4.bp.blogspot.com/-j3GLuCogtNg/XR35ak9d4PI/AAAAAAAAJEw/8onnSNO1uhEw-BaWjL-JsD8i5CGAck5hgCLcBGAs/s1600/coverage.png"></img>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <time class="cbp_tmtime" datetime=""><span>2010</span></time>
+                    <div class="cbp_tmicon cbp_tmicon-screen"></div>
+                    <div class="cbp_tmlabel">
+                        <h2>Founded Robofun</h2>
+                        <p>
+                            <a href="https://www.robofun.ro">
+                                <img src="https://4.bp.blogspot.com/-XrxZBB-pFxI/XR352u7OaAI/AAAAAAAAJE4/wZPSg5Q-p8gxvLyyfkI__QMZrd6XWJ9DACLcBGAs/s1600/robofun.png"></img>
+                            </a>
+                        </p>
+                        <p>
+                            Founded <a href="https://www.robofun.ro">https://www.robofun.ro</a>, the largest robotics shop in Romania. Still going strong in 2019.
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <time class="cbp_tmtime" datetime=""><span>2009</span></time>
+                    <div class="cbp_tmicon cbp_tmicon-screen"></div>
+                    <div class="cbp_tmlabel">
+                        <h2>Founder, Developer, Marketing & few other hats @ Taskwriter.com</h2>
+                        <p>
+                            Founded Taskwriter.com, startup focused on web tools for productivity. Failed few years later (red sea market, did not raise enough funding).
+                        </p>
+                        <p>
+                            <a href="https://www.google.com/search?q=taskwriter&ei=uNIcXee6HOucmwWh7YXoBA&start=0&sa=N&ved=0ahUKEwjn9tzykJnjAhVrzqYKHaF2AU04HhDy0wMIeA&biw=1920&bih=952">some echos still on Google</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <time class="cbp_tmtime" datetime=""><span>2008</span></time>
+                    <div class="cbp_tmicon cbp_tmicon-screen"></div>
+                    <div class="cbp_tmlabel">
+                        <h2>Started Homix SmartHome</h2>
+                        <p>
+                            Founded Homix, a research company focused on smarthomes. Failed 3 years later (probably) due to lack of focus on sales.
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <time class="cbp_tmtime" datetime=""><span>2009</span></time>
+                    <div class="cbp_tmicon cbp_tmicon-screen"></div>
+                    <div class="cbp_tmlabel">
+                        <h2>My company has been featured on TechCrunch</h2>
+                        <p>
+                            A rather simple gimmick got us featured on <a href="https://techcrunch.com/2009/09/22/twitter-iphone-balloon-nears-nerdgasm-event-horizon/"> Techcrunch</a>
+                        </p>
+                        <p>
+                            <a href="https://techcrunch.com/2009/09/22/twitter-iphone-balloon-nears-nerdgasm-event-horizon/">
+                                <img src="https://1.bp.blogspot.com/-RHmusNMclWw/XR37E2AKTMI/AAAAAAAAJFA/NUhWn4Jfl_E1pwkWgR6xCZxPnpSFNcHNwCLcBGAs/s1600/theconcept.png">
+                            </a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <time class="cbp_tmtime" datetime=""><span>2006</span></time>
+                    <div class="cbp_tmicon cbp_tmicon-screen"></div>
+                    <div class="cbp_tmlabel">
+                        <h2>OpenCoffee Romania Host & Speaker</h2>
+                        <p>
+                            OpenCoffee organizer & public speaker.
+                        </p>
+                        <p><a target="_blank"
+                                href="https://www.google.com/search?biw=1920&bih=1001&tbm=isch&sa=1&ei=eM8cXfrlAc3VwQLlx5nwAg&q=viorel+spinu+slideshare&oq=viorel+spinu+slideshare&gs_l=img.3...0.0..4006...0.0..0.0.0.......0......gws-wiz-img.qAYP6E7fJoo">some
+                                of my presentations are still available on Slideshare</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <time class="cbp_tmtime" datetime=""><span>2006</span></time>
+                    <div class="cbp_tmicon cbp_tmicon-screen"></div>
+                    <div class="cbp_tmlabel">
+                        <h2>Founder, Software Developer, Project Manager, Sales guy & few other hats @ Sety</h2>
+                        <p>
+                            Founded my first company, outsourcing company focused on providing Java solutions.
+                        </p>
+
+                    </div>
+                </li>
+                <li>
+                    <time class="cbp_tmtime" datetime=""><span>2005</span></time>
+                    <div class="cbp_tmicon cbp_tmicon-screen"></div>
+                    <div class="cbp_tmlabel">
+                        <h2>Software Developer @ TotalSoft SA</h2>
+                        <p>
+                            Intranet Java Web applications for Orange. Apache Axis, Struts 2, JSP.
+                        </p>
+
+                    </div>
+                </li>
+                <li>
+                    <time class="cbp_tmtime" datetime=""><span>2003</span></time>
+                    <div class="cbp_tmicon cbp_tmicon-screen"></div>
+                    <div class="cbp_tmlabel">
+                        <h2>Software Developer @ Kepler Rominfo</h2>
+                        <p>
+                            <img src="https://2.bp.blogspot.com/-oF7TOSHuJTo/XR38IB-UpLI/AAAAAAAAJFI/gsHvn73GiW0wm197dDGaUwaW4jrQH5TJACLcBGAs/s1600/kepler.png">
+                        </p>
+                        <p>
+                            MCDonalds Corporation, Lotus Notes, Java, Java Applets.
+                        </p>
+
+                    </div>
+                </li>
+                <li>
+                    <time class="cbp_tmtime" datetime=""><span>2000</span></time>
+                    <div class="cbp_tmicon cbp_tmicon-screen"></div>
+                    <div class="cbp_tmlabel">
+                        <h2>Software Developer @ Business Soft</h2>
+                        <p>
+                            <img style="width:450px" src="https://2.bp.blogspot.com/-v0R04lC5ZJw/XR38dEuQcpI/AAAAAAAAJFQ/SgbbYiaS_uE0DoMKD1269Ubppf1XBkR0ACLcBGAs/s200/field.png">
+                        </p>
+                        <p>
+                            IT solutions for agriculture, FoxPro, VisualBasic.
+                        </p>
+
+                    </div>
+                </li>
+                <li>
+                    <time class="cbp_tmtime" datetime=""><span>1998</span></time>
+                    <div class="cbp_tmicon cbp_tmicon-screen"></div>
+                    <div class="cbp_tmlabel">
+                        <h2>Software Developer @ Infogroup (during high-school)</h2>
+                        <p>
+                            <img style="width:450px" src="https://1.bp.blogspot.com/-2SE-P_UgQfk/XR382jJ7DkI/AAAAAAAAJFc/XI-OYBoTeGYVdUZVTqa0R9jWHgCJDlmuQCLcBGAs/s1600/foxpro.png">
+                        </p>
+                        <p>
+                            IT solutions for agriculture, FoxPro, VisualBasic.
+                        </p>
+
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+
+</html>
